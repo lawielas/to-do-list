@@ -18,7 +18,7 @@ const PlaceToGo = () => {
     <section className="shadow-xl p-4 rounded-2xl bg-white min-h-40 sm:min-h-52">
         <h2 className="bg-emerald-500 text-white w-fit py-2 px-4 rounded -mt-8">PLACES TO GO</h2>
         <div className="relative">
-            <div className={showInput ? "absolute z-40 left-8 sm:left-1/4 bg-gray-100 w-5/6 sm:w-3/6 p-3 rounded-xl flex flex-col gap-3" : "hidden"}>
+            <div className={showInput ? "absolute z-40 left-6 sm:left-1/4 bg-gray-100 w-5/6 sm:w-3/6 p-3 rounded-xl flex flex-col gap-3" : "hidden"}>
                 <button onClick={() => setShowInput(false)}><Image src={close} alt="close" className="w-7 sm:w-8 float-right" /></button>
                 <div className="flex flex-col gap-3">
                 <input className="w-full bg-white rounded-2xl p-3 outline-none" type="text" value={inputPlace} onChange={(e) => setInputPlace(e.target.value)}/>
