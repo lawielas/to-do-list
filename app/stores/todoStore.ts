@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { Item } from "../types/itemType";
 
 type TodoStore = {
@@ -8,7 +9,7 @@ type TodoStore = {
     updateTodoStatus: (id: number) => void
 }
 
-export const useTodoStore = create<TodoStore>((set) => ({
+export const useTodoStore = create(persist<TodoStore>((set) => ({
     todos: [],
     addTodo: (id: number, item: string) => {
         set((state) => ({
@@ -30,4 +31,8 @@ export const useTodoStore = create<TodoStore>((set) => ({
             todos: state.todos.map((todo) => todo.id === id ? ({...todo, status: true} as Item) : todo)
         }))
     }
-}))
+}), {
+    name: 'todo',
+    storage: createJSONStorage(() => localStorage)
+}
+))

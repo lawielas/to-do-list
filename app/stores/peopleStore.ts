@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { Item } from "../types/itemType";
 
 type PeopleToSpeak = {
@@ -8,7 +9,7 @@ type PeopleToSpeak = {
     updatePeopleStatus: (id: number) => void
 }
 
-export const usePeopleToSpeak = create<PeopleToSpeak>((set) => ({
+export const usePeopleToSpeak = create(persist<PeopleToSpeak>((set) => ({
     peopleToSpeak: [],
     addPeopleToSpeak: (id: number, item: string) => {
         set((state) => ({
@@ -30,4 +31,8 @@ export const usePeopleToSpeak = create<PeopleToSpeak>((set) => ({
             peopleToSpeak: state.peopleToSpeak.map(people => people.id === id ? ({...people, status: true} as Item) : people)
         }))
     }
-}))
+}), {
+    name: 'people',
+    storage: createJSONStorage(() => localStorage)
+}
+))

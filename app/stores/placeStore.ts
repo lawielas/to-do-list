@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { Item } from "../types/itemType";
 
 type PlaceStore = {
@@ -8,7 +9,7 @@ type PlaceStore = {
     updatePlaceStatus: (id: number) => void
 }
 
-export const usePlaceStore = create<PlaceStore>((set) => ({
+export const usePlaceStore = create(persist<PlaceStore>((set) => ({
     placesToGo: [],
     addPlaceToGo: (id: number ,item: string) => {
         set((state) => ({
@@ -30,4 +31,8 @@ export const usePlaceStore = create<PlaceStore>((set) => ({
             placesToGo: state.placesToGo.map(place => place.id === id ? ({...place, status: true} as Item) : place)
         }))
     }
-}))
+}), {
+    name: 'place',
+    storage: createJSONStorage(() => localStorage)
+}
+))
